@@ -63,8 +63,7 @@ def is_holiday(date: datetime.date = None) -> bool:
     # 搜尋該日期的資料
     for day_info in data:
         if day_info.get("date") == date_str:
-            # isHoliday 為 "是" 表示假日
-            return day_info.get("isHoliday") == "是"
+            return day_info.get("isHoliday") is True
     
     # 如果找不到該日期，根據星期判斷（週六日為假日）
     return date.weekday() >= 5
