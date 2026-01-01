@@ -79,6 +79,10 @@ pytest tests/ -v
 └── requirements.txt
 ```
 
+## Acknowledgments
+
+感謝 [@ruyut](https://github.com/ruyut) 提供的 [TaiwanCalendar](https://github.com/ruyut/TaiwanCalendar) 台灣行事曆 API。
+
 ## License
 
 MIT
