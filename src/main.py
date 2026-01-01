@@ -60,9 +60,9 @@ def run_morning():
             
             if records.checkin_time:
                 # 已打上班卡
-                print(f"已打上班卡: {records.checkin_time}")
+                print("已打上班卡: **:**")
                 if last_message_id:
-                    bot.send_message(f"✅ 已偵測到上班打卡: {records.checkin_time}")
+                    bot.send_message("✅ 已偵測到上班打卡")
                 return
             
             # 未打卡，發送提醒（早上未打卡是正常情況，需要提醒）
@@ -129,12 +129,11 @@ def run_evening():
         
         # 計算下班時間
         checkout_time = calculate_checkout_time(records.checkin_time)
-        print(f"上班時間: {records.checkin_time}, 預計下班時間: {checkout_time}")
+        print("上班時間: **:**, 預計下班時間: **:**")
         
         # 等待直到下班時間
         while not should_start_checkout_check(checkout_time):
-            current = datetime.now().strftime("%H:%M")
-            print(f"當前時間 {current}，等待下班時間 {checkout_time}")
+            print("等待下班時間...")
             time.sleep(check_interval)
         
         # 開始檢查下班打卡
@@ -160,18 +159,18 @@ def run_evening():
             if records.checkout_time:
                 # 檢查下班時間是否 >= 上班時間 + 9 小時
                 if records.checkout_time >= checkout_time:
-                    print(f"已打下班卡: {records.checkout_time} (滿 9 小時)")
+                    print("已打下班卡: **:** (滿 9 小時)")
                     if last_message_id:
-                        bot.send_message(f"✅ 已偵測到下班打卡: {records.checkout_time}")
+                        bot.send_message("✅ 已偵測到下班打卡")
                     return
                 else:
                     # 下班卡打太早，還沒滿 9 小時
-                    print(f"下班卡 {records.checkout_time} 未滿 9 小時，需等到 {checkout_time}")
+                    print("下班卡 **:** 未滿 9 小時，需等到 **:**")
             
             # 未打卡或未滿 9 小時，發送提醒
             print("未偵測到有效下班打卡，發送提醒")
             message_id = bot.send_message(
-                f"⏰ 提醒：已過下班時間 {checkout_time}，尚未打下班卡！\n請記得打卡，或回覆 /pass 跳過提醒。"
+                "⏰ 提醒：已過下班時間，尚未打下班卡！\n請記得打卡，或回覆 /pass 跳過提醒。"
             )
             if message_id:
                 last_message_id = message_id
