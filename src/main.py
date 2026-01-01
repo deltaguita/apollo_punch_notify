@@ -35,7 +35,7 @@ def run_morning():
     try:
         # 檢查是否為假日
         if is_holiday():
-            bot.send_message("🎉 今天放假！不需要打卡提醒。")
+            bot.send_message("🎉 今天放假！")
             print("今天是假日，結束執行")
             return
     except CalendarAPIError as e:
