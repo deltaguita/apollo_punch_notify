@@ -1,0 +1,48 @@
+name: Evening Checkout Reminder
+
+on:
+  schedule:
+    # UTC+8 19:00 = UTC 11:00
+    - cron: '0 11 * * *'
+  workflow_dispatch:  # 允許手動觸發
+
+jobs:
+  evening-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120  # 2 小時超時
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Playwright browsers
+        run: playwright install chromium
+
+      - name: Create .env file
+        run: |
+          cat << EOF > .env
+          login_url=https://asiaauth.mayohr.com/HRM/Account/Login?original_target=https%3A%2F%2Fapollo.mayohr.com%2Ftube&lang=zh-tw
+          checkinrecord_url=https://apollo.mayohr.com/ta/personal/checkin/checkinrecords/workrecords
+          company_code=${{ secrets.COMPANY_CODE }}
+          employee_number=${{ secrets.EMPLOYEE_NUMBER }}
+          password=${{ secrets.PASSWORD }}
+          check_checkin_time=${{ vars.CHECK_CHECKIN_TIME }}
+          check_checkout_time=${{ vars.CHECK_CHECKOUT_TIME }}
+          check_interval=${{ vars.CHECK_INTERVAL }}
+          taiwan_calendar_api=https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/{year}.json
+          TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+          EOF
+
+      - name: Run evening check
+        run: python -m src.main evening

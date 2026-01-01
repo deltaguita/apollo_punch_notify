@@ -1,0 +1,20 @@
+# Environment
+.env
+
+# Kiro
+.kiro/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.hypothesis/
+
+# IDE
+.vscode/
+.idea/
+
+# Screenshots (debug)
+*.png
+!assets/*.png
