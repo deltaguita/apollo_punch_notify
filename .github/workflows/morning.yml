@@ -1,7 +1,10 @@
 name: Morning Checkin Reminder
 
 on:
-  workflow_dispatch:  # 由樹莓派 cron 觸發
+  # 可加入 schedule 讓 GitHub 自動排程，但免費 public 專案可能延遲數分鐘至數十分鐘
+  # schedule:
+  #   - cron: '0 2 * * *'  # UTC 02:00 = 台灣時間 10:00
+  workflow_dispatch:  # 由樹莓派 cron 或手動觸發
 
 jobs:
   morning-check:
