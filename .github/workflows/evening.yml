@@ -1,10 +1,7 @@
 name: Evening Checkout Reminder
 
 on:
-  schedule:
-    # UTC+8 19:00 = UTC 11:00
-    - cron: '0 11 * * *'
-  workflow_dispatch:  # 允許手動觸發
+  workflow_dispatch:  # 由樹莓派 cron 觸發
 
 jobs:
   evening-check:
