@@ -10,6 +10,8 @@ jobs:
   evening-check:
     runs-on: ubuntu-latest
     timeout-minutes: 120  # 2 小時超時
+    env:
+      TZ: Asia/Taipei
 
     steps:
       - name: Checkout repository
